@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invito 18 Anni - Sara</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Georgia', serif;
+      background-color: #f7e6e9;
+    }
+
+    /* Schermata Iniziale (Busta) */
+    #schermata-busta {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('sfondo.png') no-repeat center center;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      transition: opacity 1s ease-in-out;
+      z-index: 10;
+    }
+
+    .testo-animato {
+      margin-top: 15vh;
+      width: 85%;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #000;
+      white-space: pre-wrap;
+    }
+
+    .clicca-busta {
+      position: absolute;
+      top: 35%;
+      width: 280px;
+      height: 200px;
+      cursor: pointer;
+    }
+
+    /* Schermata Dettagli (Nascosta all'inizio) */
+    #schermata-dettagli {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('sfondo.png') no-repeat center center;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease-in-out;
+      z-index: 5;
+      text-align: center;
+      color: #000;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* Contenuto dei dettagli */
+    .sottotitolo {
+      font-size: 1rem;
+      margin-bottom: 5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .titolo-evento {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-family: 'Georgia', serif;
+    }
+    .data-ora {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    /* Stile Bottoni Tondi */
+    .bottoni-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .bottone-tondo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #000;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .cerchio-icona {
+      width: 55px;
+      height: 55px;
+      border: 2px solid #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.85);
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .bottone-tondo:active .cerchio-icona {
+      transform: scale(0.95);
+    }
+
+    .scadenza-rsvp {
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      margin-top: 15px;
+      border-top: 1px solid rgba(0,0,0,0.2);
+      border-bottom: 1px solid rgba(0,0,0,0.2);
+      padding: 8px 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. PRIMA SCHERMATA -->
+  <div id="schermata-busta">
+    <div id="scritta" class="testo-animato"></div>
+    <div class="clicca-busta" onclick="apriInvito()"></div>
+  </div>
+
+  <!-- 2. SECONDA SCHERMATA (Dettagli) -->
+  <div id="schermata-dettagli">
+    <div class="sottotitolo">SEI INVITATO AL MIO</div>
+    <div class="titolo-evento">18° di Sara</div>
+    <div class="data-ora">
+      <strong>18 OTTOBRE 2026</strong><br>
+      ORE 21:30
+    </div>
+
+    <!-- I TRE BOTTONI INTERATTIVI -->
+    <div class="bottoni-container">
+      <!-- Bottone Dresscode -->
+      <a href="#" class="bottone-tondo" onclick="alert('Dress Code: Elegante / Abito scuro'); return false;">
+        <div class="cerchio-icona">👗</div>
+        DRESSCODE
+      </a>
+
+      <!-- Bottone Location (Sostituisci il link con la tua mappa) -->
+      <a href="https://maps.google.com/?q=TuoIndirizzo" target="_blank" class="bottone-tondo">
+        <div class="cerchio-icona">📍</div>
+        LOCATION
+      </a>
+
+      <!-- Bottone Conferma (Sostituisci il link con il tuo Google Form per presenze/allergie) -->
+      <a href="https://forms.gle/TuoLinkModulo" target="_blank" class="bottone-tondo">
+        <div class="cerchio-icona">💌</div>
+        CONFERMA
+      </a>
+    </div>
+
+    <div class="scadenza-rsvp">
+      CONFERMA LA TUA PARTECIPAZIONE ENTRO IL 15 SETTEMBRE
+    </div>
+  </div>
+
+  <script>
+    // Effetto scrittura a macchina iniziale
+    const testo = "Clicca sulla busta\nper aprire l’invito.";
+    let i = 0;
+    const velocita = 90;
+
+    function scriviTesto() {
+      if (i < testo.length) {
+        document.getElementById("scritta").innerText += testo.charAt(i);
+        i++;
+        setTimeout(scriviTesto, velocita);
+      }
+    }
+    window.onload = scriviTesto;
+
+    // Funzione di transizione al tocco della busta
+    function apriInvito() {
+      const busta = document.getElementById("schermata-busta");
+      const dettagli = document.getElementById("schermata-dettagli");
+
+      busta.style.opacity = "0";
+      setTimeout(() => {
+        busta.style.display = "none";
+        dettagli.style.pointerEvents = "auto";
+        dettagli.style.opacity = "1";
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
