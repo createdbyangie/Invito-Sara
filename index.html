@@ -41,19 +41,19 @@
       z-index: 10;
     }
 
-    /* Contenitore Scritta Iniziale Posizionato piÃ¹ in alto per evitare la busta */
+    /* Contenitore Scritta Iniziale ben distanziato in alto */
     .testo-container {
-      margin-top: 8vh;
-      width: 85%;
+      margin-top: 6vh;
+      width: 90%;
       text-align: center;
       font-size: 1.8rem;
       color: #1a1a1a;
       line-height: 1.3;
       text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
-      min-height: 70px;
+      white-space: pre-wrap;
     }
 
-    /* Singola lettera animata */
+    /* Singola lettera animata con sfumatura morbida */
     .char-fade {
       display: inline-block;
       opacity: 0;
@@ -71,26 +71,25 @@
       }
     }
 
-    /* Area Cliccabile della Busta con Effetto Lucentezza (Glow) */
+    /* Area Cliccabile della Busta con Pulsazione Leggera (Respiro) */
     .area-busta-pulsante {
       position: absolute;
       top: 48%;
       width: 260px;
       height: 180px;
-      border-radius: 20px;
       cursor: pointer;
-      animation: glowEffetto 2.5s infinite ease-in-out;
+      animation: pulsazioneBusta 2.5s infinite ease-in-out;
     }
 
-    @keyframes glowEffetto {
+    @keyframes pulsazioneBusta {
       0% {
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.2), 0 0 20px rgba(255, 192, 203, 0.3);
+        transform: scale(1);
       }
       50% {
-        box-shadow: 0 0 25px rgba(255, 215, 0, 0.7), 0 0 45px rgba(255, 182, 193, 0.8);
+        transform: scale(1.04);
       }
       100% {
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.2), 0 0 20px rgba(255, 192, 203, 0.3);
+        transform: scale(1);
       }
     }
 
@@ -237,13 +236,14 @@
         const char = testo.charAt(index);
         const span = document.createElement("span");
         
-        if (char === "\n") {
-          container.appendChild(document.createElement("br"));
+        if (char === " ") {
+          span.innerHTML = "&nbsp;";
         } else {
           span.textContent = char;
-          span.className = "char-fade";
-          container.appendChild(span);
         }
+        
+        span.className = "char-fade";
+        container.appendChild(span);
         
         index++;
         setTimeout(scriviTestoFluido, 70);
