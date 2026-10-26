@@ -39,6 +39,7 @@
       justify-content: flex-start;
       transition: opacity 1s ease-in-out;
       z-index: 10;
+      background-color: #f7e6e9; /* Colore di sfondo di sicurezza se il video tarda */
     }
 
     /* Video in background che riproduce l'animazione della busta in loop */
@@ -77,10 +78,10 @@
 
     @keyframes riflessoLampo {
       0%, 75% {
-        background-position: 100% center; /* Resta nero pulito per quasi tutto il tempo */
+        background-position: 100% center;
       }
       88% {
-        background-position: 0% center;   /* Il riflesso scorre via rapido */
+        background-position: 0% center;
       }
       100% {
         background-position: -100% center;
@@ -210,7 +211,7 @@
 
   <!-- SCHERMATA 1: VIDEO + BUSTA -->
   <div id="schermata-busta">
-    <!-- Video in loop -->
+    <!-- Assicurati che src corrisponda al nome esatto del video su GitHub -->
     <video id="bg-video" autoplay muted loop playsinline>
       <source src="video.mp4" type="video/mp4">
     </video>
@@ -280,6 +281,7 @@
       }
     }
 
+    // Parte subito appena si carica la pagina
     window.onload = scriviTestoFluido;
 
     function apriInvito() {
