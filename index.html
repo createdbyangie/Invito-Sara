@@ -56,6 +56,31 @@
       z-index: 1;
     }
 
+    /* Tasto Audio non invasivo (in alto a destra) */
+    #audio-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 20;
+      backdrop-filter: blur(4px);
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    #audio-btn:active {
+      transform: scale(0.9);
+    }
+
     /* Contenitore Scritta: Nero elegante con un riflesso lampo brevissimo */
     .testo-container {
       position: absolute;
@@ -210,6 +235,10 @@
 
   <!-- SCHERMATA 1: VIDEO + BUSTA -->
   <div id="schermata-busta">
+    <!-- Tasto Audio discreto -->
+    <div id="audio-btn" onclick="toggleAudio()">🔇</div>
+
+    <!-- Video in loop -->
     <video id="bg-video" autoplay muted loop playsinline webkit-playsinline>
       <source src="video.mp4" type="video/mp4">
     </video>
@@ -279,14 +308,25 @@
       }
     }
 
+    // Gestione attivazione/disattivazione audio tramite il bottone
+    function toggleAudio() {
+      const video = document.getElementById("bg-video");
+      const audioBtn = document.getElementById("audio-btn");
+      
+      if (video.muted) {
+        video.muted = false;
+        audioBtn.textContent = "🔊";
+      } else {
+        video.muted = true;
+        audioBtn.textContent = "🔇";
+      }
+    }
+
     window.onload = function() {
-      // Forza l'avvio del video via codice per i dispositivi mobili
       const video = document.getElementById("bg-video");
       video.play().catch(function(error) {
-        console.log("Autoplay bloccato dal browser, riprovo al primo tocco");
+        console.log("Autoplay gestito dal browser");
       });
-      
-      // Avvia la scritta
       scriviTestoFluido();
     };
 
