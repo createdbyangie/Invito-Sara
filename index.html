@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Invito 18 Anni - Sara</title>
   
   <!-- Import del font Playball da Google Fonts -->
@@ -22,37 +22,35 @@
       height: 100%;
       overflow: hidden;
       font-family: 'Playball', cursive;
-      background-color: #f7e6e9;
+      background-color: #000;
     }
 
     /* --- PRIMA SCHERMATA (VIDEO SFONDO) --- */
     #schermata-busta {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100svh; /* Altezza reale su dispositivi mobili iOS/Android */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s ease-in-out;
+      z-index: 10;
+      background-color: #000;
+      overflow: hidden;
+    }
+
+    /* Video in background a schermo intero reale */
+    #bg-video {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      transition: opacity 1s ease-in-out;
-      z-index: 10;
-      background-color: #f7e6e9;
-    }
-
-    /* Video in background */
-    #bg-video {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      transform: translate(-50%, -50%);
-      object-fit: cover;
+      object-fit: cover; /* Riempie lo schermo senza deformarsi */
       z-index: 1;
     }
 
@@ -61,34 +59,31 @@
       position: absolute;
       top: 20px;
       right: 20px;
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.5);
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
       cursor: pointer;
       z-index: 20;
-      backdrop-filter: blur(4px);
-      transition: transform 0.2s, background 0.2s;
+      backdrop-filter: blur(5px);
     }
 
-    #audio-btn:active {
-      transform: scale(0.9);
-    }
-
-    /* Contenitore Scritta: Nero elegante con un riflesso lampo brevissimo */
+    /* Contenitore Scritta: Centrato perfettamente sopra il video */
     .testo-container {
       position: absolute;
-      top: 14vh;
-      width: 85%;
+      top: 12vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
       text-align: center;
-      font-size: 2.1rem;
-      line-height: 1.25;
+      font-size: 2rem;
+      line-height: 1.3;
       z-index: 3;
       
       background: linear-gradient(90deg, #1a1a1a 0%, #1a1a1a 45%, #ffffff 50%, #1a1a1a 55%, #1a1a1a 100%);
@@ -96,23 +91,17 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: riflessoLampo 6s ease-in-out infinite;
-      filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.7));
+      filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.8));
       white-space: pre-wrap;
+      pointer-events: none;
     }
 
     @keyframes riflessoLampo {
-      0%, 75% {
-        background-position: 100% center;
-      }
-      88% {
-        background-position: 0% center;
-      }
-      100% {
-        background-position: -100% center;
-      }
+      0%, 75% { background-position: 100% center; }
+      88% { background-position: 0% center; }
+      100% { background-position: -100% center; }
     }
 
-    /* Singola lettera animata con sfumatura morbida */
     .char-fade {
       display: inline-block;
       opacity: 0;
@@ -120,33 +109,26 @@
     }
 
     @keyframes fadeInChar {
-      from {
-        opacity: 0;
-        transform: translateY(3px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Area Cliccabile della Busta */
+    /* Area Cliccabile della Busta (occupa tutto il centro) */
     .area-busta-pulsante {
       position: absolute;
-      top: 40%;
-      width: 280px;
-      height: 200px;
+      inset: 0;
+      z-index: 2;
       cursor: pointer;
-      z-index: 3;
     }
 
     /* --- SECONDA SCHERMATA (DETTAGLI) --- */
     #schermata-dettagli {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
+      height: 100svh;
       background: url('sfondo-dettagli.png') center center / cover no-repeat;
       display: flex;
       flex-direction: column;
@@ -180,7 +162,6 @@
       line-height: 1.5;
     }
 
-    /* Bottoni Interattivi */
     .bottoni-container {
       display: flex;
       gap: 20px;
@@ -212,11 +193,6 @@
       font-size: 1.4rem;
       margin-bottom: 8px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .bottone-tondo:active .cerchio-icona {
-      transform: scale(0.92);
     }
 
     .scadenza-rsvp {
@@ -236,7 +212,7 @@
   <!-- SCHERMATA 1: VIDEO + BUSTA -->
   <div id="schermata-busta">
     <!-- Tasto Audio discreto -->
-    <div id="audio-btn" onclick="toggleAudio()">🔇</div>
+    <div id="audio-btn" onclick="toggleAudio(event)">🔇</div>
 
     <!-- Video in loop -->
     <video id="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
@@ -257,19 +233,16 @@
     </div>
 
     <div class="bottoni-container">
-      <!-- Dresscode -->
       <a href="#" class="bottone-tondo" onclick="alert('Dress Code: Total Black'); return false;">
         <div class="cerchio-icona">👗</div>
         DRESSCODE
       </a>
 
-      <!-- Location -->
       <a href="https://maps.google.com/?q=TuoIndirizzo" target="_blank" class="bottone-tondo">
         <div class="cerchio-icona">📍</div>
         LOCATION
       </a>
 
-      <!-- Conferma -->
       <a href="https://forms.gle/TuoLinkModulo" target="_blank" class="bottone-tondo">
         <div class="cerchio-icona">💌</div>
         CONFERMA
@@ -308,7 +281,8 @@
       }
     }
 
-    function toggleAudio() {
+    function toggleAudio(event) {
+      event.stopPropagation(); // Evita che il click sul tasto audio apra l'invito
       const video = document.getElementById("bg-video");
       const audioBtn = document.getElementById("audio-btn");
       
