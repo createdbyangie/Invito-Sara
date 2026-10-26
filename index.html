@@ -25,14 +25,14 @@
       background-color: #f7e6e9;
     }
 
-    /* --- PRIMA SCHERMATA (BUSTA) --- */
+    /* --- PRIMA SCHERMATA (VIDEO SFONDO) --- */
     #schermata-busta {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('sfondo.png') center center / cover no-repeat;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -41,17 +41,50 @@
       z-index: 10;
     }
 
-    /* Posizionamento e allineamento esatto del testo come nella foto di riferimento */
+    /* Video in background che riproduce l'animazione della busta in loop */
+    #bg-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    /* Contenitore Scritta: Nero elegante con un riflesso lampo brevissimo */
     .testo-container {
       position: absolute;
       top: 14vh;
       width: 85%;
       text-align: center;
       font-size: 2.1rem;
-      color: #1a1a1a;
       line-height: 1.25;
-      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+      z-index: 3;
+      
+      /* Testo nero con un lampo di luce molto discreto e veloce */
+      background: linear-gradient(90deg, #1a1a1a 0%, #1a1a1a 45%, #ffffff 50%, #1a1a1a 55%, #1a1a1a 100%);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: riflessoLampo 6s ease-in-out infinite;
+      filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.7));
       white-space: pre-wrap;
+    }
+
+    @keyframes riflessoLampo {
+      0%, 75% {
+        background-position: 100% center; /* Resta nero pulito per quasi tutto il tempo */
+      }
+      88% {
+        background-position: 0% center;   /* Il riflesso scorre via rapido */
+      }
+      100% {
+        background-position: -100% center;
+      }
     }
 
     /* Singola lettera animata con sfumatura morbida */
@@ -72,26 +105,14 @@
       }
     }
 
-    /* Area Cliccabile della Busta con Pulsazione Leggera (Respiro) */
+    /* Area Cliccabile invisibile posizionata esattamente sopra la busta del video */
     .area-busta-pulsante {
       position: absolute;
       top: 40%;
       width: 280px;
       height: 200px;
       cursor: pointer;
-      animation: pulsazioneBusta 2.5s infinite ease-in-out;
-    }
-
-    @keyframes pulsazioneBusta {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.03);
-      }
-      100% {
-        transform: scale(1);
-      }
+      z-index: 3;
     }
 
     /* --- SECONDA SCHERMATA (DETTAGLI) --- */
@@ -187,8 +208,13 @@
 </head>
 <body>
 
-  <!-- SCHERMATA 1: BUSTA -->
+  <!-- SCHERMATA 1: VIDEO + BUSTA -->
   <div id="schermata-busta">
+    <!-- Video in loop -->
+    <video id="bg-video" autoplay muted loop playsinline>
+      <source src="video.mp4" type="video/mp4">
+    </video>
+
     <div id="scritta" class="testo-container"></div>
     <div class="area-busta-pulsante" onclick="apriInvito()"></div>
   </div>
