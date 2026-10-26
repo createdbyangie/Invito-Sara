@@ -239,7 +239,7 @@
     <div id="audio-btn" onclick="toggleAudio()">🔇</div>
 
     <!-- Video in loop -->
-    <video id="bg-video" autoplay muted loop playsinline webkit-playsinline>
+    <video id="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
       <source src="video.mp4" type="video/mp4">
     </video>
 
@@ -308,7 +308,6 @@
       }
     }
 
-    // Gestione attivazione/disattivazione audio tramite il bottone
     function toggleAudio() {
       const video = document.getElementById("bg-video");
       const audioBtn = document.getElementById("audio-btn");
@@ -322,13 +321,13 @@
       }
     }
 
-    window.onload = function() {
+    document.addEventListener("DOMContentLoaded", function() {
       const video = document.getElementById("bg-video");
       video.play().catch(function(error) {
         console.log("Autoplay gestito dal browser");
       });
       scriviTestoFluido();
-    };
+    });
 
     function apriInvito() {
       const busta = document.getElementById("schermata-busta");
