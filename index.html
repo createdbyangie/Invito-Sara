@@ -39,10 +39,10 @@
       justify-content: flex-start;
       transition: opacity 1s ease-in-out;
       z-index: 10;
-      background-color: #f7e6e9; /* Colore di sfondo di sicurezza se il video tarda */
+      background-color: #f7e6e9;
     }
 
-    /* Video in background che riproduce l'animazione della busta in loop */
+    /* Video in background */
     #bg-video {
       position: absolute;
       top: 50%;
@@ -66,7 +66,6 @@
       line-height: 1.25;
       z-index: 3;
       
-      /* Testo nero con un lampo di luce molto discreto e veloce */
       background: linear-gradient(90deg, #1a1a1a 0%, #1a1a1a 45%, #ffffff 50%, #1a1a1a 55%, #1a1a1a 100%);
       background-size: 300% auto;
       -webkit-background-clip: text;
@@ -106,7 +105,7 @@
       }
     }
 
-    /* Area Cliccabile invisibile posizionata esattamente sopra la busta del video */
+    /* Area Cliccabile della Busta */
     .area-busta-pulsante {
       position: absolute;
       top: 40%;
@@ -211,8 +210,7 @@
 
   <!-- SCHERMATA 1: VIDEO + BUSTA -->
   <div id="schermata-busta">
-    <!-- Assicurati che src corrisponda al nome esatto del video su GitHub -->
-    <video id="bg-video" autoplay muted loop playsinline>
+    <video id="bg-video" autoplay muted loop playsinline webkit-playsinline>
       <source src="video.mp4" type="video/mp4">
     </video>
 
@@ -281,8 +279,16 @@
       }
     }
 
-    // Parte subito appena si carica la pagina
-    window.onload = scriviTestoFluido;
+    window.onload = function() {
+      // Forza l'avvio del video via codice per i dispositivi mobili
+      const video = document.getElementById("bg-video");
+      video.play().catch(function(error) {
+        console.log("Autoplay bloccato dal browser, riprovo al primo tocco");
+      });
+      
+      // Avvia la scritta
+      scriviTestoFluido();
+    };
 
     function apriInvito() {
       const busta = document.getElementById("schermata-busta");
