@@ -22,106 +22,10 @@
       height: 100%;
       overflow: hidden;
       font-family: 'Playball', cursive;
-      background-color: #000;
+      background-color: #f7e6e9;
     }
 
-    /* --- PRIMA SCHERMATA (VIDEO SFONDO) --- */
-    #schermata-busta {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      height: 100svh; /* Altezza reale su dispositivi mobili iOS/Android */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 1s ease-in-out;
-      z-index: 10;
-      background-color: #000;
-      overflow: hidden;
-    }
-
-    /* Video in background a schermo intero reale */
-    #bg-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* Riempie lo schermo senza deformarsi */
-      z-index: 1;
-    }
-
-    /* Tasto Audio non invasivo (in alto a destra) */
-    #audio-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      cursor: pointer;
-      z-index: 20;
-      backdrop-filter: blur(5px);
-    }
-
-    /* Contenitore Scritta: Centrato perfettamente sopra il video */
-    .testo-container {
-      position: absolute;
-      top: 12vh;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      text-align: center;
-      font-size: 2rem;
-      line-height: 1.3;
-      z-index: 3;
-      
-      background: linear-gradient(90deg, #1a1a1a 0%, #1a1a1a 45%, #ffffff 50%, #1a1a1a 55%, #1a1a1a 100%);
-      background-size: 300% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: riflessoLampo 6s ease-in-out infinite;
-      filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.8));
-      white-space: pre-wrap;
-      pointer-events: none;
-    }
-
-    @keyframes riflessoLampo {
-      0%, 75% { background-position: 100% center; }
-      88% { background-position: 0% center; }
-      100% { background-position: -100% center; }
-    }
-
-    .char-fade {
-      display: inline-block;
-      opacity: 0;
-      animation: fadeInChar 0.4s forwards ease-in-out;
-    }
-
-    @keyframes fadeInChar {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Area Cliccabile della Busta (occupa tutto il centro) */
-    .area-busta-pulsante {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      cursor: pointer;
-    }
-
-    /* --- SECONDA SCHERMATA (DETTAGLI) --- */
+    /* --- SCHERMATA 2 (DETTAGLI) SOTTOSTANTE PER DISSOLVENZA --- */
     #schermata-dettagli {
       position: fixed;
       top: 0;
@@ -135,7 +39,6 @@
       align-items: center;
       justify-content: center;
       opacity: 0;
-      pointer-events: none;
       transition: opacity 1s ease-in-out;
       z-index: 5;
       text-align: center;
@@ -143,6 +46,91 @@
       padding: 20px;
     }
 
+    /* --- PRIMA SCHERMATA (VIDEO + BUSTA) SOPRA --- */
+    #schermata-busta {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s ease-in-out;
+      z-index: 10;
+      background-color: #f7e6e9;
+      overflow: hidden;
+    }
+
+    /* Video in background a schermo intero reale */
+    #bg-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    /* Tasto Audio non invasivo (in alto a destra) */
+    #audio-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 20;
+      backdrop-filter: blur(5px);
+    }
+
+    /* Contenitore Scritta: Testo Nero pulito, SENZA OMBRE */
+    .testo-container {
+      position: absolute;
+      top: 12vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      text-align: center;
+      font-size: 2.2rem;
+      line-height: 1.3;
+      z-index: 3;
+      color: #000000;
+      white-space: pre-wrap;
+      pointer-events: none;
+    }
+
+    .char-fade {
+      display: inline-block;
+      opacity: 0;
+      animation: fadeInChar 0.4s forwards ease-in-out;
+    }
+
+    @keyframes fadeInChar {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Area Cliccabile della Busta */
+    .area-busta-pulsante {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    /* Stili Seconda Schermata (Dettagli) */
     .sottotitolo {
       font-size: 1.3rem;
       margin-bottom: 5px;
@@ -282,7 +270,7 @@
     }
 
     function toggleAudio(event) {
-      event.stopPropagation(); // Evita che il click sul tasto audio apra l'invito
+      event.stopPropagation();
       const video = document.getElementById("bg-video");
       const audioBtn = document.getElementById("audio-btn");
       
@@ -307,11 +295,11 @@
       const busta = document.getElementById("schermata-busta");
       const dettagli = document.getElementById("schermata-dettagli");
 
+      dettagli.style.opacity = "1";
       busta.style.opacity = "0";
+
       setTimeout(() => {
         busta.style.display = "none";
-        dettagli.style.pointerEvents = "auto";
-        dettagli.style.opacity = "1";
       }, 1000);
     }
   </script>
