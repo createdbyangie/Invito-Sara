@@ -27,7 +27,7 @@
       background-color: #000;
     }
 
-    /* --- PRIMA SCHERMATA (VIDEO + BUSTA) INALTERATA --- */
+    /* --- SCHERMATA 1: BUSTA (INALTERATA) --- */
     #schermata-busta {
       position: fixed;
       top: 0;
@@ -45,7 +45,6 @@
       overflow: hidden;
     }
 
-    /* Video prima schermata */
     #bg-video {
       position: absolute;
       top: 0;
@@ -56,7 +55,6 @@
       z-index: 1;
     }
 
-    /* Tasto Audio discreto */
     #audio-btn {
       position: absolute;
       top: 20px;
@@ -76,7 +74,6 @@
       backdrop-filter: blur(5px);
     }
 
-    /* Scritta animata sulla busta */
     .testo-container {
       position: absolute;
       top: 12vh;
@@ -103,7 +100,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Area Cliccabile della Busta */
     .area-busta-pulsante {
       position: absolute;
       inset: 0;
@@ -112,7 +108,7 @@
     }
 
 
-    /* --- SECONDA SCHERMATA CON NUOVO VIDEO FINALE E TASTI --- */
+    /* --- SCHERMATA 2: VIDEO FINALE E AREE CLICCABILI TRASPARENTI --- */
     #schermata-dettagli {
       position: fixed;
       top: 0;
@@ -123,16 +119,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-end;
-      padding-bottom: 50px;
+      justify-content: center;
       opacity: 0;
       transition: opacity 1s ease-in-out;
       z-index: 5;
       overflow: hidden;
-      font-family: 'Montserrat', sans-serif;
     }
 
-    /* Nuovo Video Finale per la seconda parte */
     #bg-video-finale {
       position: absolute;
       top: 0;
@@ -143,53 +136,29 @@
       z-index: 1;
     }
 
-    /* Overlay per rendere ben visibili i pulsanti */
-    .overlay-dettagli {
+    /* Contenitore per allineare i pulsanti trasparenti sopra i bottoni del video */
+    .hotspots-container {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.4) 100%);
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    /* Contenitore Pulsanti Interattivi */
-    .bottoni-container {
-      position: relative;
       z-index: 3;
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      width: 80%;
-      max-width: 320px;
+      gap: 12px; /* Regola la distanza verticale se necessario */
+      width: 75%;
+      max-width: 280px;
+      bottom: 12vh; /* Posiziona i link nella parte bassa dove ci sono i bottoni nel video */
     }
 
-    .btn-interattivo {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      color: #fff;
-      padding: 14px 20px;
-      border-radius: 30px;
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      text-align: center;
+    /* Aree trasparenti sovrapposte ai tasti del video */
+    .hotspot-btn {
+      width: 100%;
+      height: 48px; /* Altezza stimata del bottone nel video */
+      background: transparent; /* Invisibile, si vede il video sotto */
+      border: none;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-      text-decoration: none;
       display: block;
+      text-decoration: none;
     }
 
-    .btn-interattivo:active {
-      transform: scale(0.96);
-      background: rgba(255, 255, 255, 0.35);
-    }
 
     /* POP-UP MODALE DRESS CODE */
     .modal {
@@ -272,43 +241,39 @@
 
   <!-- SCHERMATA 1: VIDEO + BUSTA -->
   <div id="schermata-busta">
-    <!-- Tasto Audio discreto -->
     <div id="audio-btn" onclick="toggleAudio(event)">🔇</div>
-
-    <!-- Video prima schermata -->
     <video id="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
       <source src="video.mp4" type="video/mp4">
     </video>
-
     <div id="scritta" class="testo-container"></div>
     <div class="area-busta-pulsante" onclick="apriInvito()"></div>
   </div>
 
-  <!-- SCHERMATA 2: SECONDA PARTE CON NUOVO VIDEO FINALE E TASTI -->
+  <!-- SCHERMATA 2: SECONDA PARTE CON VIDEO FINALE E AREE CLICCABILI SOPRA I BOTTONI -->
   <div id="schermata-dettagli">
-    <!-- Nuovo video di sfondo finale -->
+    <!-- Nota: se hai rinominato il file senza spazio metti videofinale.mp4 -->
     <video id="bg-video-finale" loop muted playsinline webkit-playsinline preload="auto">
-      <source src="videofinale.mp4" type="video/mp4">
+      <source src="videofinale .mp4" type="video/mp4">
     </video>
 
-    <div class="overlay-dettagli"></div>
-
-    <!-- Tasti Interattivi -->
-    <div class="bottoni-container">
-      <button class="btn-interattivo" onclick="openModal('dresscode-modal')">Dress Code</button>
-      <a href="https://maps.google.com/?q=Villa+Brusa+Villabate" target="_blank" class="btn-interattivo">Location</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfMXxNJMhYbVsZIxITV36BCIWxzh7P6D4XMae4woPi9Cz0t_Q/viewform?usp=header" target="_blank" class="btn-interattivo">Conferma Presenza</a>
+    <!-- Aree trasparenti posizionate esattamente sui bottoni neri del video -->
+    <div class="hotspots-container">
+      <!-- 1. Tasto Dress Code (Apre il pop-up) -->
+      <button class="hotspot-btn" onclick="openModal('dresscode-modal')"></button>
+      
+      <!-- 2. Tasto Location (Villa Brusa) -->
+      <a href="https://maps.google.com/?q=Villa+Brusa+Villabate" target="_blank" class="hotspot-btn"></a>
+      
+      <!-- 3. Tasto Conferma Presenza (Google Form) -->
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfMXxNJMhYbVsZIxITV36BCIWxzh7P6D4XMae4woPi9Cz0t_Q/viewform?usp=header" target="_blank" class="hotspot-btn"></a>
     </div>
   </div>
 
-  <!-- POP-UP DRESS CODE CON GRAFICA E FONT PLAYBALL -->
+  <!-- POP-UP DRESS CODE -->
   <div id="dresscode-modal" class="modal" onclick="closeModalOnOuterClick(event, 'dresscode-modal')">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal('dresscode-modal')">&times;</span>
-      
-      <!-- Grafica carica su GitHub come dresscode -->
       <img src="dresscode.png" alt="Dress Code" class="popup-graphic" onerror="this.style.display='none'">
-
       <p class="modal-text">
         La regola d'oro della serata: banditi i colori...
         <span class="highlight-font">Total Black</span>
@@ -365,13 +330,11 @@
       scriviTestoFluido();
     });
 
-    /* Transizione al click della busta */
     function apriInvito() {
       const busta = document.getElementById("schermata-busta");
       const dettagli = document.getElementById("schermata-dettagli");
       const videoFinale = document.getElementById("bg-video-finale");
 
-      // Avvia la riproduzione del video finale
       if (videoFinale) {
         videoFinale.play().catch(function(e) { console.log(e); });
       }
@@ -384,7 +347,6 @@
       }, 1000);
     }
 
-    /* Gestione Pop-up Modale */
     function openModal(modalId) {
       const modal = document.getElementById(modalId);
       modal.style.display = 'flex';
