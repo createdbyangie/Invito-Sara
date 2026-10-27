@@ -142,17 +142,17 @@
       z-index: 3;
       display: flex;
       flex-direction: column;
-      gap: 12px; /* Regola la distanza verticale se necessario */
+      gap: 12px;
       width: 75%;
       max-width: 280px;
-      bottom: 12vh; /* Posiziona i link nella parte bassa dove ci sono i bottoni nel video */
+      bottom: 12vh;
     }
 
     /* Aree trasparenti sovrapposte ai tasti del video */
     .hotspot-btn {
       width: 100%;
-      height: 48px; /* Altezza stimata del bottone nel video */
-      background: transparent; /* Invisibile, si vede il video sotto */
+      height: 48px;
+      background: transparent;
       border: none;
       cursor: pointer;
       display: block;
@@ -251,9 +251,9 @@
 
   <!-- SCHERMATA 2: SECONDA PARTE CON VIDEO FINALE E AREE CLICCABILI SOPRA I BOTTONI -->
   <div id="schermata-dettagli">
-    <!-- Nota: se hai rinominato il file senza spazio metti videofinale.mp4 -->
+    <!-- Corretto lo spazio nel nome del file video -->
     <video id="bg-video-finale" loop muted playsinline webkit-playsinline preload="auto">
-      <source src="videofinale .mp4" type="video/mp4">
+      <source src="videofinale.mp4" type="video/mp4">
     </video>
 
     <!-- Aree trasparenti posizionate esattamente sui bottoni neri del video -->
