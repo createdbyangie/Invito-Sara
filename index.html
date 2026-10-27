@@ -5,16 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Invito 18 Anni - Sara</title>
   
-  <!-- Import del font Playball da Google Fonts -->
+  <!-- Import dei font Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playball&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     body, html {
@@ -22,31 +24,10 @@
       height: 100%;
       overflow: hidden;
       font-family: 'Playball', cursive;
-      background-color: #f7e6e9;
+      background-color: #000;
     }
 
-    /* --- SCHERMATA 2 (DETTAGLI) SOTTOSTANTE PER DISSOLVENZA --- */
-    #schermata-dettagli {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      height: 100svh;
-      background: url('sfondo-dettagli.png') center center / cover no-repeat;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      z-index: 5;
-      text-align: center;
-      color: #1a1a1a;
-      padding: 20px;
-    }
-
-    /* --- PRIMA SCHERMATA (VIDEO + BUSTA) SOPRA --- */
+    /* --- PRIMA SCHERMATA (VIDEO + BUSTA) INALTERATA --- */
     #schermata-busta {
       position: fixed;
       top: 0;
@@ -64,7 +45,7 @@
       overflow: hidden;
     }
 
-    /* Video in background a schermo intero reale */
+    /* Video prima schermata */
     #bg-video {
       position: absolute;
       top: 0;
@@ -75,7 +56,7 @@
       z-index: 1;
     }
 
-    /* Tasto Audio non invasivo (in alto a destra) */
+    /* Tasto Audio discreto */
     #audio-btn {
       position: absolute;
       top: 20px;
@@ -95,7 +76,7 @@
       backdrop-filter: blur(5px);
     }
 
-    /* Contenitore Scritta: Testo Nero pulito, SENZA OMBRE */
+    /* Scritta animata sulla busta */
     .testo-container {
       position: absolute;
       top: 12vh;
@@ -130,68 +111,160 @@
       cursor: pointer;
     }
 
-    /* Stili Seconda Schermata (Dettagli) */
-    .sottotitolo {
-      font-size: 1.3rem;
-      margin-bottom: 5px;
-      letter-spacing: 2px;
-      color: #333;
-    }
 
-    .titolo-evento {
-      font-size: 3.2rem;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    .data-ora {
-      font-size: 1.4rem;
-      margin-bottom: 40px;
-      line-height: 1.5;
-    }
-
-    .bottoni-container {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      margin-bottom: 30px;
-    }
-
-    .bottone-tondo {
+    /* --- SECONDA SCHERMATA CON NUOVO VIDEO FINALE E TASTI --- */
+    #schermata-dettagli {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100svh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      text-decoration: none;
-      color: #1a1a1a;
-      font-size: 1rem;
-      font-weight: bold;
-      font-family: sans-serif;
-      letter-spacing: 1px;
+      justify-content: flex-end;
+      padding-bottom: 50px;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      z-index: 5;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
     }
 
-    .cerchio-icona {
-      width: 60px;
-      height: 60px;
-      border: 2px solid #1a1a1a;
-      border-radius: 50%;
+    /* Nuovo Video Finale per la seconda parte */
+    #bg-video-finale {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    /* Overlay per rendere ben visibili i pulsanti */
+    .overlay-dettagli {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.4) 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Contenitore Pulsanti Interattivi */
+    .bottoni-container {
+      position: relative;
+      z-index: 3;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.9);
-      font-size: 1.4rem;
-      margin-bottom: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      flex-direction: column;
+      gap: 15px;
+      width: 80%;
+      max-width: 320px;
     }
 
-    .scadenza-rsvp {
-      font-family: sans-serif;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
-      margin-top: 10px;
-      border-top: 1px solid rgba(0,0,0,0.15);
-      border-bottom: 1px solid rgba(0,0,0,0.15);
-      padding: 8px 15px;
+    .btn-interattivo {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: block;
+    }
+
+    .btn-interattivo:active {
+      transform: scale(0.96);
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    /* POP-UP MODALE DRESS CODE */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      position: relative;
+      background: #fff;
+      border-radius: 20px;
+      padding: 25px;
+      width: 90%;
+      max-width: 340px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      overflow: hidden;
+    }
+
+    .modal.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .popup-graphic {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .modal-text {
       color: #333;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .highlight-font {
+      font-family: 'Playball', cursive;
+      font-size: 28px;
+      color: #000;
+      display: block;
+      margin-top: 5px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      font-size: 24px;
+      color: #666;
+      cursor: pointer;
+      line-height: 1;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -202,7 +275,7 @@
     <!-- Tasto Audio discreto -->
     <div id="audio-btn" onclick="toggleAudio(event)">🔇</div>
 
-    <!-- Video in loop -->
+    <!-- Video prima schermata -->
     <video id="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
       <source src="video.mp4" type="video/mp4">
     </video>
@@ -211,34 +284,35 @@
     <div class="area-busta-pulsante" onclick="apriInvito()"></div>
   </div>
 
-  <!-- SCHERMATA 2: DETTAGLI EVENTO -->
+  <!-- SCHERMATA 2: SECONDA PARTE CON NUOVO VIDEO FINALE E TASTI -->
   <div id="schermata-dettagli">
-    <div class="sottotitolo">Sei invitato al mio</div>
-    <div class="titolo-evento">18° di Sara</div>
-    <div class="data-ora">
-      <strong>18 OTTOBRE 2026</strong><br>
-      ORE 21:30
-    </div>
+    <!-- Nuovo video di sfondo finale -->
+    <video id="bg-video-finale" loop muted playsinline webkit-playsinline preload="auto">
+      <source src="videofinale.mp4" type="video/mp4">
+    </video>
 
+    <div class="overlay-dettagli"></div>
+
+    <!-- Tasti Interattivi -->
     <div class="bottoni-container">
-      <a href="#" class="bottone-tondo" onclick="alert('Dress Code: Total Black'); return false;">
-        <div class="cerchio-icona">👗</div>
-        DRESSCODE
-      </a>
-
-      <a href="https://maps.google.com/?q=TuoIndirizzo" target="_blank" class="bottone-tondo">
-        <div class="cerchio-icona">📍</div>
-        LOCATION
-      </a>
-
-      <a href="https://forms.gle/TuoLinkModulo" target="_blank" class="bottone-tondo">
-        <div class="cerchio-icona">💌</div>
-        CONFERMA
-      </a>
+      <button class="btn-interattivo" onclick="openModal('dresscode-modal')">Dress Code</button>
+      <a href="https://maps.google.com/?q=Villa+Brusa+Villabate" target="_blank" class="btn-interattivo">Location</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfMXxNJMhYbVsZIxITV36BCIWxzh7P6D4XMae4woPi9Cz0t_Q/viewform?usp=header" target="_blank" class="btn-interattivo">Conferma Presenza</a>
     </div>
+  </div>
 
-    <div class="scadenza-rsvp">
-      CONFERMA LA TUA PARTECIPAZIONE ENTRO IL 15 SETTEMBRE
+  <!-- POP-UP DRESS CODE CON GRAFICA E FONT PLAYBALL -->
+  <div id="dresscode-modal" class="modal" onclick="closeModalOnOuterClick(event, 'dresscode-modal')">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('dresscode-modal')">&times;</span>
+      
+      <!-- Grafica carica su GitHub come dresscode -->
+      <img src="dresscode.png" alt="Dress Code" class="popup-graphic" onerror="this.style.display='none'">
+
+      <p class="modal-text">
+        La regola d'oro della serata: banditi i colori...
+        <span class="highlight-font">Total Black</span>
+      </p>
     </div>
   </div>
 
@@ -291,9 +365,16 @@
       scriviTestoFluido();
     });
 
+    /* Transizione al click della busta */
     function apriInvito() {
       const busta = document.getElementById("schermata-busta");
       const dettagli = document.getElementById("schermata-dettagli");
+      const videoFinale = document.getElementById("bg-video-finale");
+
+      // Avvia la riproduzione del video finale
+      if (videoFinale) {
+        videoFinale.play().catch(function(e) { console.log(e); });
+      }
 
       dettagli.style.opacity = "1";
       busta.style.opacity = "0";
@@ -301,6 +382,29 @@
       setTimeout(() => {
         busta.style.display = "none";
       }, 1000);
+    }
+
+    /* Gestione Pop-up Modale */
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.style.display = 'flex';
+      setTimeout(() => {
+        modal.classList.add('active');
+      }, 10);
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.remove('active');
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300);
+    }
+
+    function closeModalOnOuterClick(event, modalId) {
+      if (event.target.id === modalId) {
+        closeModal(modalId);
+      }
     }
   </script>
 
