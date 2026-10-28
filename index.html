@@ -27,7 +27,7 @@
       background-color: #000;
     }
 
-    /* --- SCHERMATA 1: BUSTA (INALTERATA) --- */
+    /* --- SCHERMATA 1: BUSTA --- */
     #schermata-busta {
       position: fixed;
       top: 0;
@@ -107,8 +107,7 @@
       cursor: pointer;
     }
 
-
-    /* --- SCHERMATA 2: VIDEO FINALE E AREE CLICCABILI TRASPARENTI --- */
+    /* --- SCHERMATA 2: VIDEO FINALE E HOTSPOT --- */
     #schermata-dettagli {
       position: fixed;
       top: 0;
@@ -136,7 +135,7 @@
       z-index: 1;
     }
 
-    /* Contenitore ORIZZONTALE per i 3 cerchi in basso */
+    /* Contenitore orizzontale per i 3 cerchi in basso */
     .hotspots-container {
       position: absolute;
       z-index: 3;
@@ -146,7 +145,7 @@
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      flex-direction: row; /* In fila orizzontale */
+      flex-direction: row;
       justify-content: space-around;
       align-items: center;
     }
@@ -155,7 +154,7 @@
     .hotspot-btn {
       width: 65px;
       height: 65px;
-      border-radius: 50%; /* Perfettamente rotondi */
+      border-radius: 50%;
       background: transparent;
       border: none;
       cursor: pointer;
@@ -164,8 +163,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-
-    /* POP-UP MODALE DRESS CODE (INGRANDITO E SENZA CORNICI) */
+    /* POP-UP MODALE DRESS CODE */
     .modal {
       display: none;
       position: fixed;
@@ -192,10 +190,10 @@
 
     .modal-content {
       position: relative;
-      background: transparent; /* Nessuno sfondo bianco o cornice */
+      background: transparent;
       padding: 0;
       margin: 0;
-      width: 95%; /* Molto più grande per leggibilità perfetta */
+      width: 95%;
       max-width: 440px;
       text-align: center;
       box-shadow: none;
@@ -216,7 +214,6 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
 
-    /* Crocetta di chiusura posizionata sul bordo dell'immagine */
     .close-btn {
       position: absolute;
       top: -10px;
@@ -241,6 +238,11 @@
 </head>
 <body>
 
+  <!-- AUDIO DI SFONDO (Partirà al click sulla busta) -->
+  <audio id="bg-audio" preload="auto" loop>
+    <source src="canzone.mp3" type="audio/mpeg">
+  </audio>
+
   <!-- SCHERMATA 1: VIDEO + BUSTA -->
   <div id="schermata-busta">
     <div id="audio-btn" onclick="toggleAudio(event)">🔇</div>
@@ -257,7 +259,7 @@
       <source src="videofinale.mp4" type="video/mp4">
     </video>
 
-    <!-- Hotspot orizzontali e rotondi disposti sopra le tre icone del video -->
+    <!-- Hotspot orizzontali e rotondi -->
     <div class="hotspots-container">
       <!-- 1. Tasto Dress Code -->
       <button class="hotspot-btn" onclick="openModal('dresscode-modal')"></button>
@@ -265,8 +267,8 @@
       <!-- 2. Tasto Location -->
       <a href="https://maps.google.com/?q=Villa+Brusa+Villabate" target="_blank" class="hotspot-btn"></a>
       
-      <!-- 3. Tasto Conferma Presenza -->
-      <a href="https://forms.gle/CfeQJgGaHppAAHZ97" target="_blank" class="hotspot-btn"></a>
+      <!-- 3. Tasto Conferma Presenza (Mantieni qui il tuo nuovo link) -->
+      <a href="https://docs.google.com/forms/d/e/IL_TUO_LINK_QUI/viewform" target="_blank" class="hotspot-btn"></a>
     </div>
   </div>
 
@@ -331,6 +333,14 @@
       const busta = document.getElementById("schermata-busta");
       const dettagli = document.getElementById("schermata-dettagli");
       const videoFinale = document.getElementById("bg-video-finale");
+      const bgAudio = document.getElementById("bg-audio");
+
+      // Avvia la musica di sottofondo
+      if (bgAudio) {
+        bgAudio.play().catch(function(e) {
+          console.log("Riproduzione audio impedita dal browser:", e);
+        });
+      }
 
       if (videoFinale) {
         videoFinale.play().catch(function(e) { console.log(e); });
