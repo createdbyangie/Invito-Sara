@@ -136,22 +136,22 @@
       z-index: 1;
     }
 
-    /* Contenitore per allineare i pulsanti trasparenti sopra i bottoni del video */
+    /* Contenitore e posizionamento dei pulsanti trasparenti */
     .hotspots-container {
       position: absolute;
       z-index: 3;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
       width: 75%;
       max-width: 280px;
-      bottom: 12vh;
+      height: 200px;
+      bottom: 10vh;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
-    /* Aree trasparenti sovrapposte ai tasti del video */
     .hotspot-btn {
+      position: absolute;
       width: 100%;
-      height: 48px;
+      height: 45px;
       background: transparent;
       border: none;
       cursor: pointer;
@@ -159,8 +159,19 @@
       text-decoration: none;
     }
 
+    /* Posizione dei tre tasti all'interno del blocco */
+    #hotspot-dresscode {
+      top: 0px;
+    }
+    #hotspot-location {
+      top: 70px;
+    }
+    #hotspot-conferma {
+      top: 140px;
+    }
 
-    /* POP-UP MODALE DRESS CODE */
+
+    /* POP-UP MODALE DRESS CODE (SOLO GRAFICA) */
     .modal {
       display: none;
       position: fixed;
@@ -189,7 +200,7 @@
       position: relative;
       background: #fff;
       border-radius: 20px;
-      padding: 25px;
+      padding: 20px;
       width: 90%;
       max-width: 340px;
       text-align: center;
@@ -206,34 +217,19 @@
     .popup-graphic {
       width: 100%;
       border-radius: 12px;
-      margin-bottom: 15px;
       display: block;
-    }
-
-    .modal-text {
-      color: #333;
-      font-size: 14px;
-      line-height: 1.5;
-      margin-bottom: 10px;
-    }
-
-    .highlight-font {
-      font-family: 'Playball', cursive;
-      font-size: 28px;
-      color: #000;
-      display: block;
-      margin-top: 5px;
     }
 
     .close-btn {
       position: absolute;
-      top: 12px;
+      top: 10px;
       right: 15px;
       font-size: 24px;
       color: #666;
       cursor: pointer;
       line-height: 1;
       font-weight: bold;
+      z-index: 10;
     }
   </style>
 </head>
@@ -249,23 +245,22 @@
     <div class="area-busta-pulsante" onclick="apriInvito()"></div>
   </div>
 
-  <!-- SCHERMATA 2: SECONDA PARTE CON VIDEO FINALE E AREE CLICCABILI SOPRA I BOTTONI -->
+  <!-- SCHERMATA 2: SECONDA PARTE CON VIDEO FINALE -->
   <div id="schermata-dettagli">
-    <!-- Corretto lo spazio nel nome del file video -->
-    <video id="bg-video-finale" loop muted playsinline webkit-playsinline preload="auto">
+    <!-- Senza loop: il video si ferma sull'ultimo fotogramma -->
+    <video id="bg-video-finale" muted playsinline webkit-playsinline preload="auto">
       <source src="videofinale.mp4" type="video/mp4">
     </video>
 
-    <!-- Aree trasparenti posizionate esattamente sui bottoni neri del video -->
     <div class="hotspots-container">
-      <!-- 1. Tasto Dress Code (Apre il pop-up) -->
-      <button class="hotspot-btn" onclick="openModal('dresscode-modal')"></button>
+      <!-- 1. Tasto Dress Code -->
+      <button id="hotspot-dresscode" class="hotspot-btn" onclick="openModal('dresscode-modal')"></button>
       
-      <!-- 2. Tasto Location (Villa Brusa) -->
-      <a href="https://maps.google.com/?q=Villa+Brusa+Villabate" target="_blank" class="hotspot-btn"></a>
+      <!-- 2. Tasto Location -->
+      <a id="hotspot-location" href="https://maps.google.com/?q=Villa+Brusa+Villabate" target="_blank" class="hotspot-btn"></a>
       
-      <!-- 3. Tasto Conferma Presenza (Google Form) -->
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfMXxNJMhYbVsZIxITV36BCIWxzh7P6D4XMae4woPi9Cz0t_Q/viewform?usp=header" target="_blank" class="hotspot-btn"></a>
+      <!-- 3. Tasto Conferma Presenza -->
+      <a id="hotspot-conferma" href="https://docs.google.com/forms/d/e/1FAIpQLSfMXxNJMhYbVsZIxITV36BCIWxzh7P6D4XMae4woPi9Cz0t_Q/viewform?usp=header" target="_blank" class="hotspot-btn"></a>
     </div>
   </div>
 
@@ -274,10 +269,6 @@
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal('dresscode-modal')">&times;</span>
       <img src="dresscode.png" alt="Dress Code" class="popup-graphic" onerror="this.style.display='none'">
-      <p class="modal-text">
-        La regola d'oro della serata: banditi i colori...
-        <span class="highlight-font">Total Black</span>
-      </p>
     </div>
   </div>
 
