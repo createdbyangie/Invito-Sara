@@ -217,4 +217,164 @@
     .close-btn {
       position: absolute;
       top: -10px;
-      right
+      right: -10px;
+      width: 36px;
+      height: 36px;
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      cursor: pointer;
+      line-height: 1;
+      font-weight: bold;
+      z-index: 10;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUDIO DI SFONDO -->
+  <audio id="bg-audio" preload="auto" loop>
+    <source src="canzone.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- SCHERMATA 1: VIDEO + BUSTA -->
+  <div id="schermata-busta">
+    <div id="audio-btn" onclick="toggleAudio(event)">🔇</div>
+    <video id="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+      <source src="video.mp4" type="video/mp4">
+    </video>
+    <div id="scritta" class="testo-container"></div>
+    <div class="area-busta-pulsante" onclick="apriInvito()"></div>
+  </div>
+
+  <!-- SCHERMATA 2: SECONDA PARTE CON VIDEO FINALE -->
+  <div id="schermata-dettagli">
+    <video id="bg-video-finale" muted playsinline webkit-playsinline preload="auto">
+      <source src="videofinale.mp4" type="video/mp4">
+    </video>
+
+    <!-- Hotspot orizzontali e rotondi -->
+    <div class="hotspots-container">
+      <!-- 1. Tasto Dress Code -->
+      <button class="hotspot-btn" onclick="openModal('dresscode-modal')"></button>
+      
+      <!-- 2. Tasto Location -->
+      <a href="https://maps.google.com/?q=Villa+Brusa+Villabate" target="_blank" class="hotspot-btn"></a>
+      
+      <!-- 3. Tasto Conferma Presenza con link esteso corretto -->
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-W5h6_dC8L9z-Y1W2t2Q9xW8vP4K1m3N6j7h9f5s2d3a1g/viewform?usp=header" target="_blank" class="hotspot-btn"></a>
+    </div>
+  </div>
+
+  <!-- POP-UP DRESS CODE -->
+  <div id="dresscode-modal" class="modal" onclick="closeModalOnOuterClick(event, 'dresscode-modal')">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('dresscode-modal')">&times;</span>
+      <img src="dresscode.png" alt="Dress Code" class="popup-graphic" onerror="this.style.display='none'">
+    </div>
+  </div>
+
+  <script>
+    const testo = "Clicca sulla busta\nper aprire l’invito.";
+    const container = document.getElementById("scritta");
+    let index = 0;
+
+    function scriviTestoFluido() {
+      if (index < testo.length) {
+        const char = testo.charAt(index);
+        const span = document.createElement("span");
+        
+        if (char === "\n") {
+          container.appendChild(document.createElement("br"));
+        } else {
+          if (char === " ") {
+            span.innerHTML = "&nbsp;";
+          } else {
+            span.textContent = char;
+          }
+          span.className = "char-fade";
+          container.appendChild(span);
+        }
+        
+        index++;
+        setTimeout(scriviTestoFluido, 70);
+      }
+    }
+
+    function toggleAudio(event) {
+      event.stopPropagation();
+      const video = document.getElementById("bg-video");
+      const audioBtn = document.getElementById("audio-btn");
+      
+      if (video.muted) {
+        video.muted = false;
+        audioBtn.textContent = "🔊";
+      } else {
+        video.muted = true;
+        audioBtn.textContent = "🔇";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const video = document.getElementById("bg-video");
+      video.play().catch(function(error) {
+        console.log("Autoplay gestito dal browser");
+      });
+      scriviTestoFluido();
+    });
+
+    function apriInvito() {
+      const busta = document.getElementById("schermata-busta");
+      const dettagli = document.getElementById("schermata-dettagli");
+      const videoFinale = document.getElementById("bg-video-finale");
+      const bgAudio = document.getElementById("bg-audio");
+
+      if (bgAudio) {
+        bgAudio.play().catch(function(e) {
+          console.log("Riproduzione audio impedita dal browser:", e);
+        });
+      }
+
+      if (videoFinale) {
+        videoFinale.play().catch(function(e) { console.log(e); });
+      }
+
+      dettagli.style.opacity = "1";
+      busta.style.opacity = "0";
+
+      setTimeout(() => {
+        busta.style.display = "none";
+      }, 1000);
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.style.display = 'flex';
+      setTimeout(() => {
+        modal.classList.add('active');
+      }, 10);
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.remove('active');
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300);
+    }
+
+    function closeModalOnOuterClick(event, modalId) {
+      if (event.target.id === modalId) {
+        closeModal(modalId);
+      }
+    }
+  </script>
+
+</body>
+</html>
